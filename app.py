@@ -1,4 +1,5 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 import torch
 import torch.nn as nn
@@ -8,6 +9,15 @@ import io
 import uvicorn
 
 app = FastAPI(title="Dog Skin Disease API")
+
+# เปิด CORS ให้ทุก origin เข้าถึงได้
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # --- 1. Load Model ---
 def load_model():
@@ -98,4 +108,4 @@ async def predict(file: UploadFile = File(...)):
 
 if __name__ == '__main__':
     # รันเซิร์ฟเวอร์ด้วย uvicorn
-    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)

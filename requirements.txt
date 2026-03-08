@@ -5,3 +5,4 @@ python-multipart==0.0.9
 torch==2.2.1+cpu
 torchvision==0.17.1+cpu
 Pillow==10.2.0
+numpy==2.3.0
